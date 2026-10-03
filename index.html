@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QueueLab | Queue ADT Simulator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background Effects -->
+    <div class="background">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="grid"></div>
+    </div>
+
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">Q</span>
+
+            <div>
+                <h2>QueueLab</h2>
+                <p>ADT Simulator</p>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#simulator">Simulator</a>
+            <a href="#operations">Operations</a>
+            <a href="#applications">Applications</a>
+        </div>
+
+    </nav>
+
+
+    <!-- HOME -->
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                ● Interactive Data Structure Project
+            </div>
+
+            <h1>
+                Visualize the
+                <span>Queue ADT</span>
+            </h1>
+
+            <p>
+                Explore Queue operations through an interactive
+                visual simulator and understand the concept of
+                First In, First Out.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#simulator" class="primary-btn">
+                    Launch Simulator →
+                </a>
+
+                <a href="#operations" class="secondary-btn">
+                    Explore Operations
+                </a>
+            </div>
+
+        </div>
+
+
+        <!-- Queue Preview -->
+        <div class="queue-preview">
+
+            <div class="preview-label">
+                LIVE QUEUE PREVIEW
+            </div>
+
+            <div class="queue-box">
+
+                <div class="pointer front">
+                    <span>FRONT</span>
+                    ↓
+                </div>
+
+                <div class="queue-items">
+                    <div class="queue-item">10</div>
+                    <div class="queue-item">20</div>
+                    <div class="queue-item">30</div>
+                    <div class="queue-item">40</div>
+                </div>
+
+                <div class="pointer rear">
+                    <span>REAR</span>
+                    ↓
+                </div>
+
+            </div>
+
+            <div class="fifo">
+                FIRST IN&nbsp;&nbsp; → &nbsp;&nbsp;FIRST OUT
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SIMULATOR -->
+    <section class="section" id="simulator">
+
+        <div class="section-heading">
+
+            <div>
+                <p class="section-tag">INTERACTIVE LAB</p>
+
+                <h2>
+                    Queue <span>Simulator</span>
+                </h2>
+
+                <p>
+                    Add, remove and inspect elements in real time.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="simulator-grid">
+
+            <!-- Queue Display -->
+            <div class="glass-card queue-display">
+
+                <div class="card-header">
+                    <div>
+                        <p>CURRENT QUEUE</p>
+                        <h3>FIFO Structure</h3>
+                    </div>
+
+                    <div class="status">
+                        ● READY
+                    </div>
+                </div>
+
+
+                <div class="big-queue">
+
+                    <div class="queue-label">
+                        FRONT
+                    </div>
+
+                    <div id="queueContainer" class="queue-container">
+                        <!-- Queue elements will appear here -->
+                    </div>
+
+                    <div class="queue-label">
+                        REAR
+                    </div>
+
+                </div>
+
+
+                <div class="queue-info">
+
+                    <div>
+                        <span>Queue Size</span>
+                        <strong id="queueSize">0</strong>
+                    </div>
+
+                    <div>
+                        <span>Front</span>
+                        <strong id="frontValue">—</strong>
+                    </div>
+
+                    <div>
+                        <span>Rear</span>
+                        <strong id="rearValue">—</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Controls -->
+            <div class="glass-card controls">
+
+                <div class="card-header">
+                    <div>
+                        <p>CONTROLS</p>
+                        <h3>Queue Operations</h3>
+                    </div>
+                </div>
+
+
+                <label for="valueInput">
+                    Enter Value
+                </label>
+
+                <input
+                    type="number"
+                    id="valueInput"
+                    placeholder="e.g. 50"
+                >
+
+
+                <button class="operation-btn enqueue-btn" onclick="enqueue()">
+                    <span>＋</span>
+                    Enqueue
+                </button>
+
+                <button class="operation-btn dequeue-btn" onclick="dequeue()">
+                    <span>−</span>
+                    Dequeue
+                </button>
+
+                <div class="small-buttons">
+
+                    <button onclick="peek()">
+                        ◉ Peek
+                    </button>
+
+                    <button onclick="queueSize()">
+                        ＃ Size
+                    </button>
+
+                    <button onclick="isEmpty()">
+                        ◇ Is Empty
+                    </button>
+
+                    <button onclick="clearQueue()">
+                        ↻ Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+<div class="live-stats">
+
+    <div class="stat-card">
+        <span>⚡</span>
+        <p>Total Operations</p>
+        <h3 id="operationCount">0</h3>
+    </div>
+
+    <div class="stat-card">
+        <span>📦</span>
+        <p>Queue Size</p>
+        <h3 id="liveQueueSize">0</h3>
+    </div>
+
+    <div class="stat-card">
+        <span>🚪</span>
+        <p>Front Element</p>
+        <h3 id="liveFront">—</h3>
+    </div>
+
+    <div class="stat-card">
+        <span>🔚</span>
+        <p>Rear Element</p>
+        <h3 id="liveRear">—</h3>
+    </div>
+
+</div>
+
+        <!-- Message -->
+        <div id="message" class="message">
+            Queue is ready. Try an operation!
+        </div>
+
+    </section>
+
+
+    <!-- OPERATIONS -->
+    <section class="section operations-section" id="operations">
+
+        <div class="section-heading centered">
+
+            <p class="section-tag">CORE CONCEPT</p>
+
+            <h2>
+                Queue <span>Operations</span>
+            </h2>
+
+            <p>
+                Understand how each operation works in a Queue ADT.
+            </p>
+
+        </div>
+
+
+        <div class="operation-cards">
+
+            <div class="operation-card">
+                <div class="operation-icon">＋</div>
+                <h3>Enqueue</h3>
+                <p>
+                    Adds a new element at the rear of the queue.
+                </p>
+                <span>Time: O(1)</span>
+            </div>
+
+
+            <div class="operation-card">
+                <div class="operation-icon">−</div>
+                <h3>Dequeue</h3>
+                <p>
+                    Removes the element from the front of the queue.
+                </p>
+                <span>Time: O(1)</span>
+            </div>
+
+
+            <div class="operation-card">
+                <div class="operation-icon">◉</div>
+                <h3>Peek</h3>
+                <p>
+                    Displays the front element without removing it.
+                </p>
+                <span>Time: O(1)</span>
+            </div>
+
+
+            <div class="operation-card">
+                <div class="operation-icon">＃</div>
+                <h3>Size</h3>
+                <p>
+                    Returns the number of elements in the queue.
+                </p>
+                <span>Time: O(1)</span>
+            </div>
+
+        </div>
+
+    </section>
+<!-- ALGORITHM VISUALIZER -->
+
+<section class="algorithm-section">
+
+    <div class="section-heading">
+        <span class="section-tag">HOW IT WORKS</span>
+        <h2>Algorithm Visualizer</h2>
+        <p>Understand Queue ADT operations step by step.</p>
+    </div>
+
+    <div class="algorithm-grid">
+
+        <div class="algorithm-card">
+
+            <div class="algorithm-icon">➕</div>
+
+            <h3>Enqueue</h3>
+
+            <p>Adds a new element at the REAR of the queue.</p>
+
+            <div class="algorithm-steps">
+
+                <div class="step">
+                    <span>01</span>
+                    <p>Check if the queue has space.</p>
+                </div>
+
+                <div class="step">
+                    <span>02</span>
+                    <p>Insert the new element at REAR.</p>
+                </div>
+
+                <div class="step">
+                    <span>03</span>
+                    <p>Update the queue.</p>
+                </div>
+
+            </div>
+
+            <div class="complexity">
+                Time Complexity: <strong>O(1)</strong>
+            </div>
+
+        </div>
+
+
+        <div class="algorithm-card">
+
+            <div class="algorithm-icon">➖</div>
+
+            <h3>Dequeue</h3>
+
+            <p>Removes the first element from the FRONT.</p>
+
+            <div class="algorithm-steps">
+
+                <div class="step">
+                    <span>01</span>
+                    <p>Check if the queue is empty.</p>
+                </div>
+
+                <div class="step">
+                    <span>02</span>
+                    <p>Remove the element from FRONT.</p>
+                </div>
+
+                <div class="step">
+                    <span>03</span>
+                    <p>Update the queue.</p>
+                </div>
+
+            </div>
+
+            <div class="complexity">
+                Time Complexity: <strong>O(1)</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- REAL LIFE APPLICATIONS -->
+    <section class="section" id="applications">
+
+        <div class="section-heading centered">
+
+            <p class="section-tag">REAL WORLD</p>
+
+            <h2>
+                Queue in <span>Everyday Life</span>
+            </h2>
+
+            <p>
+                Queue ADT is used in many real-world systems.
+            </p>
+
+        </div>
+
+
+        <div class="application-card">
+
+    <div class="application-icon">🎓</div>
+
+    <h3>College Canteen</h3>
+
+    <p>
+        Students join the queue and are served
+        in the same order they arrive.
+    </p>
+
+    <div class="application-flow">
+        <span>Student 1</span>
+        <span>Student 2</span>
+        <span>Student 3</span>
+        <span>→</span>
+        <strong>Service</strong>
+    </div>
+
+</div>
+
+
+<div class="application-card">
+
+    <div class="application-icon">🎟️</div>
+
+    <h3>Ticket Counter</h3>
+
+    <p>
+        Customers receive service based on their
+        arrival order using FIFO.
+    </p>
+
+    <div class="application-flow">
+        <span>Person A</span>
+        <span>Person B</span>
+        <span>Person C</span>
+        <span>→</span>
+        <strong>Counter</strong>
+    </div>
+
+</div>
+
+
+<div class="application-card">
+
+    <div class="application-icon">🏥</div>
+
+    <h3>Hospital Tokens</h3>
+
+    <p>
+        Token numbers help organize patients
+        waiting for their turn.
+    </p>
+
+    <div class="application-flow">
+        <span>Token 101</span>
+        <span>Token 102</span>
+        <span>Token 103</span>
+        <span>→</span>
+        <strong>Doctor</strong>
+    </div>
+
+</div>
+
+    </section>
+
+<!-- QUEUE QUIZ -->
+
+<section class="quiz-section">
+
+    <div class="section-heading">
+        <span class="section-tag">TEST YOUR KNOWLEDGE</span>
+        <h2>Queue Quiz 🧠</h2>
+        <p>Answer 5 questions and test your Queue ADT knowledge.</p>
+    </div>
+
+    <div class="quiz-card">
+
+        <div class="quiz-progress">
+            Question <span id="questionNumber">1</span> of 5
+        </div>
+
+        <h3 id="quizQuestion">
+            Which principle does a Queue follow?
+        </h3>
+
+        <div id="quizOptions" class="quiz-options"></div>
+
+        <div id="quizResult" class="quiz-result">
+            Select an answer to continue.
+        </div>
+
+        <button id="nextButton" class="next-question" onclick="nextQuestion()" style="display: none;">
+            Next Question →
+        </button>
+
+    </div>
+
+</section>
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-logo">
+            QueueLab
+        </div>
+
+        <p>
+            An Interactive Queue ADT Operations Simulator
+        </p>
+
+        <span>
+            Data Structures & Algorithms Mini Project
+        </span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
